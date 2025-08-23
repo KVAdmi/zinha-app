@@ -1,0 +1,301 @@
+/* SOLUCIÓN COMPLETA PARA TECLADO ANDROID */
+
+/* Configuración base para móviles */
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  position: relative;
+  /* Prevenir zoom automático en Android */
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+#root {
+  height: 100vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+/* ===== SOLUCIÓN DEFINITIVA PARA INPUTS ===== */
+/* Prevenir zoom automático en Android */
+input, textarea, select {
+  font-size: 16px !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  border-radius: 0 !important;
+  background-color: white !important;
+  padding: 12px !important;
+  border: 1px solid #ccc !important;
+  outline: none !important;
+  
+  /* Hardware acceleration */
+  transform: translateZ(0) !important;
+  -webkit-transform: translateZ(0) !important;
+  
+  /* Prevenir problemas de focus */
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+}
+
+/* Estados específicos para inputs */
+input:focus, textarea:focus, select:focus {
+  font-size: 16px !important;
+  outline: none !important;
+  border-color: #382a3c !important;
+  transform: translateZ(0) !important;
+}
+
+/* Override de clases de Tailwind que pueden causar problemas */
+.bg-brand-background\/80 {
+  background-color: white !important;
+}
+
+/* Placeholders visibles */
+input::placeholder, textarea::placeholder {
+  color: #666 !important;
+  opacity: 1 !important;
+}
+
+/* ===== FIN SOLUCIÓN INPUTS ===== */
+
+/* Altura estándar para headers y footers */
+:root {
+  --header-height: 64px; /* 4rem */
+  --bottom-nav-height: 80px; /* 5rem */
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Prevenir cambios de viewport al abrir el teclado */
+@viewport {
+  width: device-width;
+  zoom: 1.0;
+  user-zoom: fixed;
+}
+
+@media screen and (max-width: 768px) {
+  /* Headers fijos con altura consistente */
+  .mobile-header-fixed {
+    position: fixed !important;
+    top: var(--safe-area-top) !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: var(--header-height) !important;
+    z-index: 40 !important;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: transform;
+  }
+
+  /* Bottom navigation fijo */
+  .mobile-bottom-nav-fixed {
+    position: fixed !important;
+    bottom: var(--safe-area-bottom) !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: var(--bottom-nav-height) !important;
+    z-index: 50 !important;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  /* Contenido principal con padding correcto */
+  .mobile-main-content {
+    padding-top: var(--header-height) !important;
+    padding-bottom: var(--bottom-nav-height) !important;
+    min-height: calc(100vh - var(--header-height) - var(--bottom-nav-height)) !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Cuando no hay header visible */
+  .mobile-main-content.no-header {
+    padding-top: var(--safe-area-top) !important;
+  }
+
+  /* CORRECCIÓN CRÍTICA PARA INPUTS EN MÓVILES */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="search"],
+  input[type="date"],
+  textarea,
+  select {
+    /* Prevenir zoom automático */
+    font-size: 16px !important;
+    
+    /* Remover estilos por defecto del navegador */
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    border-radius: 0 !important;
+    
+    /* Mejorar la interacción táctil */
+    touch-action: manipulation !important;
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    -webkit-tap-highlight-color: transparent !important;
+    
+    /* Hardware acceleration para mejor rendimiento */
+    transform: translateZ(0) !important;
+    will-change: transform !important;
+    
+    /* Prevenir que el navegador ajuste el texto */
+    -webkit-text-size-adjust: 100% !important;
+    -moz-text-size-adjust: 100% !important;
+    -ms-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
+  }
+
+  /* Comportamiento específico en focus */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    
+    /* Asegurar visibilidad cuando aparece el teclado */
+    scroll-margin-top: 100px !important;
+    scroll-margin-bottom: 100px !important;
+    
+    /* Prevenir que el zoom cause problemas */
+    zoom: 1 !important;
+    -webkit-text-size-adjust: 100% !important;
+  }
+
+  /* Prevenir el resize automático del viewport */
+  html {
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    text-size-adjust: none;
+  }
+}
+
+/* SOLUCIÓN ESPECÍFICA PARA ANDROID CHROME */
+@supports (-webkit-touch-callout: none) {
+  /* iOS - no aplicar estos fixes */
+}
+
+/* Fixes específicos para el chat en móvil */
+.chat-container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.chat-input-area {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1000 !important;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.chat-floating-button {
+  position: fixed !important;
+  z-index: 1001 !important;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Asegurar que los elementos fixed funcionen en Android */
+@media screen and (max-width: 768px) {
+  .fixed {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+  }
+  
+  /* Fallback para Android que no soporta position: fixed correctamente */
+  @supports not (position: sticky) {
+    .fixed {
+      position: absolute !important;
+    }
+  }
+}
+
+@supports not (-webkit-touch-callout: none) {
+  /* Android específico */
+  body {
+    /* Fijar el cuerpo para evitar resize */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+  }
+  
+  #root {
+    height: 100vh !important;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Prevenir el highlight azul en Android */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Permitir selección de texto en elementos específicos */
+input, textarea, [contenteditable] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Mejorar los botones táctiles */
+button, .touchable {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Header dinámico mejorado */
+.dynamic-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  transition: transform 0.3s ease-in-out;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.dynamic-header.hidden {
+  transform: translateY(-100%);
+  -webkit-transform: translateY(-100%);
+}
+
+/* Mejorar el performance de animaciones */
+.hardware-accelerated {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Estilos para el emoji picker en móviles */
+.emoji-picker-mobile {
+  max-height: 300px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Fix para elementos que se superponen */
+.z-layer-1 { z-index: 10; }
+.z-layer-2 { z-index: 20; }
+.z-layer-3 { z-index: 30; }
+.z-layer-4 { z-index: 40; }
+.z-layer-5 { z-index: 50; }
+.z-layer-top { z-index: 9999; }

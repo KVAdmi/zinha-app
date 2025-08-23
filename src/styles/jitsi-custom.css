@@ -1,0 +1,166 @@
+/* Estilos personalizados para Jitsi - Zinha App */
+@import url('https://fonts.googleapis.com/css2?family=Questrial:wght@400&display=swap');
+
+/* Ocultar completamente elementos de marca Jitsi */
+.watermark,
+.jitsi-watermark,
+.poweredby,
+[data-testid="watermark"],
+[data-testid="poweredby"],
+.powered-by,
+.jitsi-icon,
+.jitsi-logo,
+.deep-linking-mobile,
+.notice-message,
+.mobile-app-promo {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+}
+
+/* Personalizar la interfaz principal */
+.jitsi-meet-app,
+#jitsiConference0,
+.conference {
+  font-family: 'Questrial', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  background: linear-gradient(135deg, #f5e6ff 0%, #c8a6a6 50%, #8d7583 100%) !important;
+}
+
+/* Ocultar encabezado de Jitsi */
+.subject,
+.subject-info-container,
+.header,
+.subject-text,
+.filmstrip-only .toolbar,
+.conference-timer {
+  display: none !important;
+}
+
+/* Personalizar toolbar */
+.new-toolbox,
+.toolbox-content-wrapper {
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 16px !important;
+  margin: 12px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Botones del toolbar */
+.toolbox-button,
+.toolbox-icon {
+  background: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
+  border-radius: 12px !important;
+  margin: 4px !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #382a3c !important;
+  transition: all 0.2s ease !important;
+}
+
+.toolbox-button:hover {
+  background: rgba(193, 212, 58, 0.8) !important;
+  transform: scale(1.05) !important;
+}
+
+/* Botón de colgar */
+.hangup-button {
+  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%) !important;
+}
+
+/* Video principal */
+.videocontainer,
+.large-video-container,
+.large-video {
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Panel de participantes */
+.participants-pane,
+.chat-container {
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(20px) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.3) !important;
+  font-family: 'Questrial', sans-serif !important;
+}
+
+/* Nombres de participantes */
+.displayname,
+.participant-name {
+  font-family: 'Questrial', sans-serif !important;
+  font-weight: 600 !important;
+  color: #382a3c !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Chat */
+.chat-message,
+.chat-input {
+  font-family: 'Questrial', sans-serif !important;
+}
+
+/* Minimapa de participantes */
+.filmstrip {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(15px) !important;
+  border-radius: 12px !important;
+  margin: 8px !important;
+}
+
+.videocontainer .videocontainer__toptoolbar {
+  background: rgba(56, 42, 60, 0.8) !important;
+  backdrop-filter: blur(10px) !important;
+  border-radius: 8px 8px 0 0 !important;
+}
+
+/* Notificaciones */
+.notification,
+.notifications-container {
+  font-family: 'Questrial', sans-serif !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 12px !important;
+  color: #382a3c !important;
+}
+
+/* Diálogos y modales */
+.modal,
+.dialog {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(25px) !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  font-family: 'Questrial', sans-serif !important;
+}
+
+/* Ocultar elementos específicos de branding */
+[class*="watermark"],
+[class*="powered"],
+[class*="jitsi-logo"],
+[class*="brand"],
+[id*="watermark"],
+[id*="powered"],
+[data-testid*="watermark"],
+[data-testid*="powered"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Asegurar que el contenedor ocupe toda la pantalla */
+.jitsi-meet-app,
+#jitsiConference0 {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 1000 !important;
+}

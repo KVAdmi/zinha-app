@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Token Tracking</title>
+</head>
+<body>
+    <h1>Debug Token: track_d402362837f541d2b90af1076eb6c43b</h1>
+    <div id="result"></div>
+    
+    <script>
+    async function testToken() {
+        const token = 'track_d402362837f541d2b90af1076eb6c43b';
+        const supabaseUrl = 'https://gptwzuqmuvzttajgjrry.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdwdHd6dXFtdXZ6dHRhamdqcnJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI1MDU1NzAsImV4cCI6MjA2ODA4MTU3MH0.AAbVhdrI7LmSPKKRX0JhSkYxVg7VOw-ccizKTOh7pV8';
+        
+        console.log('🔍 Testando token:', token);
+        
+        try {
+            const response = await fetch(`${supabaseUrl}/rest/v1/rpc/obtener_seguimiento_por_token_v2`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': supabaseKey,
+                    'Authorization': `Bearer ${supabaseKey}`
+                },
+                body: JSON.stringify({ p_token: token })
+            });
+            
+            console.log('📡 Response status:', response.status);
+            console.log('📡 Response headers:', response.headers);
+            
+            const data = await response.json();
+            console.log('📦 Response data:', data);
+            
+            document.getElementById('result').innerHTML = `
+                <h2>Resultado:</h2>
+                <p><strong>Status:</strong> ${response.status}</p>
+                <p><strong>Data:</strong></p>
+                <pre>${JSON.stringify(data, null, 2)}</pre>
+            `;
+            
+        } catch (error) {
+            console.error('❌ Error:', error);
+            document.getElementById('result').innerHTML = `
+                <h2>Error:</h2>
+                <p style="color: red;">${error.message}</p>
+            `;
+        }
+    }
+    
+    // Ejecutar cuando cargue la página
+    window.onload = testToken;
+    </script>
+</body>
+</html>

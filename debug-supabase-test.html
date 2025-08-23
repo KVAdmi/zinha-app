@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Supabase - Zinha App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #382a3c;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        button:hover {
+            background: #4a3c4f;
+        }
+        .result {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .success { border-color: #28a745; background: #d4edda; }
+        .error { border-color: #dc3545; background: #f8d7da; }
+    </style>
+</head>
+<body>
+    <h1>🚨 Debug Supabase - Tabla acompanamientos_activos</h1>
+    
+    <div class="test-section">
+        <h2>🔍 Test 1: Verificar estructura de tabla</h2>
+        <button onclick="checkTableStructure()">Ver Estructura de Tabla</button>
+        <div id="structure-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>📝 Test 2: Ver datos existentes</h2>
+        <button onclick="viewExistingData()">Ver Todos los Registros</button>
+        <div id="data-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>🧪 Test 3: Insertar con ubicación</h2>
+        <button onclick="testGeoLocationInsert()">Obtener ubicación e insertar</button>
+        <div id="insert-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>🗑️ Test 4: Limpiar datos de prueba</h2>
+        <button onclick="cleanTestData()">Limpiar Registros de Prueba</button>
+        <div id="clean-result" class="result"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Configuración de Supabase
+        const supabaseUrl = 'https://gptwzuqmuvzttajgjrry.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdwdHd6dXFtdXZ6dHRhamdqcnJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI1MDU1NzAsImV4cCI6MjA2ODA4MTU3MH0.AAbVhdrI7LmSPKKRX0JhSkYxVg7VOw-ccizKTOh7pV8';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        async function checkTableStructure() {
+            const result = document.getElementById('structure-result');
+            result.innerHTML = 'Verificando estructura de tabla...';
+            
+            try {
+                // Primero intentar obtener la estructura usando información del sistema
+                const { data, error } = await supabase
+                    .from('acompanamientos_activos')
+                    .select('*')
+                    .limit(1);
+
+                if (error) {
+                    throw error;
+                }
+
+                const report = [];
+                report.push('📊 ESTRUCTURA DE TABLA acompanamientos_activos:');
+                report.push('');
+
+                if (data.length > 0) {
+                    const sample = data[0];
+                    report.push('🔍 COLUMNAS DETECTADAS:');
+                    Object.keys(sample).forEach(key => {
+                        const value = sample[key];
+                        const type = value === null ? 'NULL' : typeof value;
+                        report.push(`  • ${key}: ${type} = ${value}`);
+                    });
+                } else {
+                    report.push('⚠️ No hay registros en la tabla para detectar estructura');
+                }
+
+                report.push('');
+                report.push('🎯 COLUMNAS ESPERADAS PARA GEOLOCALIZACIÓN:');
+                report.push('  • latitud_actual: number');
+                report.push('  • longitud_actual: number');
+                report.push('  • precision_metros: number');
+                report.push('  • ubicacion: string (POINT format)');
+
+                result.className = 'result success';
+                result.innerHTML = report.join('\n');
+
+            } catch (error) {
+                result.className = 'result error';
+                result.innerHTML = `❌ ERROR: ${error.message}`;
+            }
+        }
+
+        async function viewExistingData() {
+            const result = document.getElementById('data-result');
+            result.innerHTML = 'Obteniendo datos existentes...';
+            
+            try {
+                const { data, error } = await supabase
+                    .from('acompanamientos_activos')
+                    .select('*')
+                    .order('created_at', { ascending: false })
+                    .limit(10);
+
+                if (error) {
+                    throw error;
+                }
+
+                const report = [];
+                report.push(`📋 REGISTROS EXISTENTES (últimos 10 de ${data.length}):`);
+                report.push('');
+
+                if (data.length === 0) {
+                    report.push('⚠️ No hay registros en la tabla');
+                } else {
+                    data.forEach((record, index) => {
+                        report.push(`📝 REGISTRO #${index + 1}:`);
+                        Object.entries(record).forEach(([key, value]) => {
+                            report.push(`  ${key}: ${value}`);
+                        });
+                        report.push('---');
+                    });
+                }
+
+                result.className = 'result success';
+                result.innerHTML = report.join('\n');
+
+            } catch (error) {
+                result.className = 'result error';
+                result.innerHTML = `❌ ERROR: ${error.message}`;
+            }
+        }
+
+        async function testGeoLocationInsert() {
+            const result = document.getElementById('insert-result');
+            result.innerHTML = 'Obteniendo ubicación...';
+            
+            try {
+                // Obtener ubicación
+                const position = await new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject, {
+                        enableHighAccuracy: true,
+                        timeout: 15000,
+                        maximumAge: 0
+                    });
+                });
+
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                const accuracy = position.coords.accuracy;
+
+                result.innerHTML = `Ubicación obtenida: ${lat}, ${lng}\nInsertando en base de datos...`;
+
+                // Generar user_id de prueba
+                const testUserId = 'test-user-' + Date.now();
+
+                // Intentar insertar con diferentes formatos
+                const insertData = {
+                    user_id: testUserId,
+                    latitud_actual: lat,
+                    longitud_actual: lng,
+                    ubicacion_actual: `POINT(${lng} ${lat})`,
+                    activo: true,
+                    precision_metros: Math.round(accuracy),
+                    updated_at: new Date().toISOString()
+                };
+
+                const { data, error } = await supabase
+                    .from('acompanamientos_activos')
+                    .insert(insertData)
+                    .select();
+
+                if (error) {
+                    throw error;
+                }
+
+                const report = [];
+                report.push('✅ INSERCIÓN EXITOSA:');
+                report.push('');
+                report.push('📍 DATOS ENVIADOS:');
+                Object.entries(insertData).forEach(([key, value]) => {
+                    report.push(`  ${key}: ${value}`);
+                });
+                report.push('');
+                report.push('📊 DATOS RETORNADOS:');
+                if (data && data.length > 0) {
+                    Object.entries(data[0]).forEach(([key, value]) => {
+                        report.push(`  ${key}: ${value}`);
+                    });
+                } else {
+                    report.push('  (Sin datos retornados)');
+                }
+
+                result.className = 'result success';
+                result.innerHTML = report.join('\n');
+
+            } catch (error) {
+                result.className = 'result error';
+                result.innerHTML = `❌ ERROR: ${error.message}\n\nStack: ${error.stack}`;
+            }
+        }
+
+        async function cleanTestData() {
+            const result = document.getElementById('clean-result');
+            result.innerHTML = 'Limpiando registros de prueba...';
+            
+            try {
+                const { data, error } = await supabase
+                    .from('acompanamientos_activos')
+                    .delete()
+                    .like('user_id', 'test-user-%')
+                    .select();
+
+                if (error) {
+                    throw error;
+                }
+
+                result.className = 'result success';
+                result.innerHTML = `✅ Eliminados ${data ? data.length : 0} registros de prueba`;
+
+            } catch (error) {
+                result.className = 'result error';
+                result.innerHTML = `❌ ERROR: ${error.message}`;
+            }
+        }
+
+        // Auto-ejecutar verificación de estructura al cargar
+        window.onload = () => {
+            checkTableStructure();
+        };
+    </script>
+</body>
+</html>

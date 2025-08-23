@@ -1,0 +1,328 @@
+/* CORRECCIONES CRÍTICAS PARA LAYOUT MÓVIL - APP NATIVA */
+
+/* Variables para altura cons  /* Prevenir zoom en inputs */
+  input[type="text"],
+  input[type="email"], 
+  input[type="password"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="search"],
+  input[type="date"],
+  textarea,
+  select {
+    font-size: 16px !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    border-radius: 0 !important;
+    touch-action: manipulation !important;
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    -webkit-tap-highlight-color: transparent !important;
+    /* Prevenir que el teclado cause issues */
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  /* Focus específico para inputs en móvil */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    /* Asegurar que el input quede visible cuando aparece el teclado */
+    scroll-margin-top: 20px;
+    scroll-margin-bottom: 20px;
+  }
+
+  /* Mejorar el comportamiento del teclado virtual */
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus,
+  input[type="date"]:focus,
+  textarea:focus {
+    /* Pequeño delay para permitir que el teclado aparezca */
+    animation: inputFocus 0.3s ease-out;
+  }
+
+  @keyframes inputFocus {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0); }
+  }ot {
+  --zinha-header-height: 64px;
+  --zinha-bottom-nav-height: 80px;
+  --zinha-safe-area-top: env(safe-area-inset-top, 0px);
+  --zinha-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* CORRECCIÓN PRINCIPAL: Z-INDEX LAYERS */
+.z-background { z-index: 0; }
+.z-content { z-index: 1; }
+.z-sidebar { z-index: 10; }
+.z-header { z-index: 40; }
+.z-bottom-nav { z-index: 50; }
+.z-modal { z-index: 100; }
+.z-tooltip { z-index: 200; }
+.z-notification { z-index: 300; }
+
+/* LAYOUT MÓVIL PRINCIPAL */
+@media screen and (max-width: 768px) {
+  /* Contenedor principal de la app */
+  .mobile-app-container {
+    position: relative;
+    width: 100%;
+    max-width: 448px; /* max-w-md */
+    min-height: 100vh;
+    margin: 0 auto;
+    overflow-x: hidden;
+    background: var(--brand-background);
+  }
+
+  /* Header fijo corregido */
+  .mobile-header {
+    position: fixed !important;
+    top: var(--zinha-safe-area-top);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 448px;
+    height: var(--zinha-header-height);
+    z-index: var(--z-header, 40);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(200, 166, 166, 0.2);
+    will-change: transform;
+  }
+
+  /* Bottom navigation fijo corregido */
+  .mobile-bottom-nav {
+    position: fixed !important;
+    bottom: var(--zinha-safe-area-bottom);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 448px;
+    height: var(--zinha-bottom-nav-height);
+    z-index: var(--z-bottom-nav, 50);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(200, 166, 166, 0.2);
+  }
+
+  /* Contenido principal con padding correcto */
+  .mobile-main-content {
+    position: relative;
+    min-height: calc(100vh - var(--zinha-header-height) - var(--zinha-bottom-nav-height));
+    padding-top: var(--zinha-header-height);
+    padding-bottom: var(--zinha-bottom-nav-height);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    z-index: var(--z-content, 1);
+  }
+
+  /* Variación sin header */
+  .mobile-main-content.no-header {
+    padding-top: calc(var(--zinha-safe-area-top) + 1rem);
+    min-height: calc(100vh - var(--zinha-bottom-nav-height) - var(--zinha-safe-area-top) - 1rem);
+  }
+
+  /* Variación solo con header (sin bottom nav) */
+  .mobile-main-content.no-bottom-nav {
+    padding-bottom: var(--zinha-safe-area-bottom);
+    min-height: calc(100vh - var(--zinha-header-height) - var(--zinha-safe-area-bottom));
+  }
+
+  /* PREVENIR PROBLEMAS DE VIEWPORT */
+  
+  /* Evitar zoom en inputs */
+  input[type="text"],
+  input[type="email"], 
+  input[type="password"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="search"],
+  textarea,
+  select {
+    font-size: 16px !important;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+  }
+
+  /* Mejorar el comportamiento del teclado virtual */
+  .keyboard-visible .mobile-bottom-nav {
+    transform: translateX(-50%) translateY(100%);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  /* CORRECCIONES DE PERFORMANCE */
+  
+  /* Hardware acceleration para elementos fijos */
+  .mobile-header,
+  .mobile-bottom-nav {
+    transform: translateX(-50%) translateZ(0);
+    -webkit-transform: translateX(-50%) translateZ(0);
+    will-change: transform;
+  }
+
+  /* Eliminar el bounce en iOS/Android */
+  body {
+    overscroll-behavior-y: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Mejorar el tap highlighting */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+
+  /* Permitir selección solo donde sea necesario */
+  input, textarea, [contenteditable="true"] {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+
+  /* CORRECCIONES ESPECÍFICAS PARA CHAT ROOMS */
+  
+  .chat-room-layout {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .chat-room-layout .mobile-main-content {
+    height: calc(100vh - var(--zinha-bottom-nav-height));
+    padding-top: 0;
+    padding-bottom: var(--zinha-bottom-nav-height);
+  }
+
+  /* MANEJO GLOBAL DEL TECLADO VIRTUAL */
+  
+  /* Detectar cuando el viewport cambia por el teclado */
+  @media screen and (max-height: 500px) {
+    /* Cuando el teclado está abierto, ocultar temporalmente el bottom nav */
+    .mobile-bottom-nav {
+      transform: translateX(-50%) translateY(100%) !important;
+      transition: transform 0.2s ease-in-out !important;
+    }
+    
+    /* Ajustar el main content cuando el teclado está visible */
+    .mobile-main-content {
+      padding-bottom: 20px !important;
+      min-height: calc(100vh - 20px) !important;
+    }
+    
+    /* Mejorar el comportamiento de scroll */
+    body {
+      overflow: hidden;
+    }
+    
+    .mobile-main-content {
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+  }
+
+  /* Mejorar el scroll hacia inputs cuando el teclado aparece */
+  .mobile-main-content.keyboard-visible {
+    padding-bottom: 20px !important;
+  }
+
+  /* Clases específicas para cuando el teclado está visible */
+  .keyboard-visible {
+    padding-bottom: 20px !important;
+    min-height: calc(100vh - 20px) !important;
+  }
+
+  .keyboard-hidden {
+    transform: translateX(-50%) translateY(100%) !important;
+    transition: transform 0.2s ease-in-out !important;
+  }
+
+  /* EMERGENCY BUTTONS Y ELEMENTOS FLOTANTES */
+  
+  .floating-emergency-button {
+    position: fixed !important;
+    bottom: calc(var(--zinha-bottom-nav-height) + var(--zinha-safe-area-bottom) + 1rem);
+    right: 1rem;
+    z-index: var(--z-notification, 300);
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  /* CORRECCIONES PARA DIFERENTES RESOLUCIONES */
+  
+  /* iPhone SE (375px) */
+  @media screen and (max-width: 375px) {
+    .mobile-header h1 {
+      font-size: 1rem;
+      max-width: 200px;
+    }
+    
+    .mobile-bottom-nav .nav-item-label {
+      font-size: 0.75rem;
+    }
+  }
+
+  /* iPhone 12/13/14 (390px) */
+  @media screen and (min-width: 376px) and (max-width: 414px) {
+    .mobile-header h1 {
+      font-size: 1.125rem;
+      max-width: 250px;
+    }
+  }
+
+  /* Tablets pequeñas (hasta 768px) */
+  @media screen and (min-width: 415px) and (max-width: 768px) {
+    .mobile-app-container {
+      max-width: 100%;
+      padding: 0 1rem;
+    }
+    
+    .mobile-header,
+    .mobile-bottom-nav {
+      max-width: calc(100% - 2rem);
+    }
+  }
+}
+
+/* MODO LANDSCAPE MÓVIL */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  :root {
+    --zinha-header-height: 56px; /* Más compacto en landscape */
+    --zinha-bottom-nav-height: 64px;
+  }
+
+  .mobile-header h1 {
+    font-size: 1rem;
+  }
+
+  .mobile-bottom-nav .nav-item {
+    padding: 0.5rem 0;
+  }
+}
+
+/* MODO DARK (si se implementa) */
+@media (prefers-color-scheme: dark) {
+  .mobile-header,
+  .mobile-bottom-nav {
+    background: rgba(0, 0, 0, 0.9);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* CORRECCIONES PARA PWA */
+@media (display-mode: standalone) {
+  .mobile-header {
+    top: var(--zinha-safe-area-top);
+  }
+  
+  .mobile-bottom-nav {
+    bottom: var(--zinha-safe-area-bottom);
+  }
+}

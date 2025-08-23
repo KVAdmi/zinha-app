@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DEBUG RPC - Zinha Tracking</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .result { background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .error { background: #ffebee; color: #c62828; }
+        .success { background: #e8f5e8; color: #2e7d32; }
+        pre { white-space: pre-wrap; word-break: break-all; }
+    </style>
+</head>
+<body>
+    <h1>🔍 DEBUG RPC - Zinha Tracking</h1>
+    
+    <button onclick="testRPC()">🧪 PROBAR RPC CON TOKEN</button>
+    
+    <div id="results"></div>
+
+    <script>
+        const supabaseUrl = 'https://gptwzuqmuvzttajgjrry.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdwdHd6dXFtdXZ6dHRhamdqcnJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI1MDU1NzAsImV4cCI6MjA2ODA4MTU3MH0.AAbVhdrI7LmSPKKRX0JhSkYxVg7VOw-ccizKTOh7pV8';
+        const testToken = 'track_90847f034872db6b853309aafea38427';
+
+        async function testRPC() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<div class="result">🔄 Probando RPC...</div>';
+
+            try {
+                console.log('🧪 Probando RPC con token:', testToken);
+
+                const response = await fetch(`${supabaseUrl}/rest/v1/rpc/obtener_seguimiento_por_token_v2`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': supabaseKey,
+                        'Authorization': `Bearer ${supabaseKey}`
+                    },
+                    body: JSON.stringify({ p_token: testToken })
+                });
+
+                console.log('📡 Response status:', response.status);
+                console.log('📡 Response headers:', Object.fromEntries(response.headers.entries()));
+
+                const rawText = await response.text();
+                console.log('📄 Raw response:', rawText);
+
+                let data;
+                try {
+                    data = JSON.parse(rawText);
+                } catch (parseError) {
+                    console.error('❌ Parse error:', parseError);
+                    resultsDiv.innerHTML = `
+                        <div class="result error">
+                            <h3>❌ ERROR DE PARSE</h3>
+                            <p><strong>Status:</strong> ${response.status}</p>
+                            <p><strong>Raw Response:</strong></p>
+                            <pre>${rawText}</pre>
+                            <p><strong>Parse Error:</strong> ${parseError.message}</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                console.log('📦 Parsed data:', data);
+
+                if (response.ok) {
+                    resultsDiv.innerHTML = `
+                        <div class="result success">
+                            <h3>✅ RPC FUNCIONÓ</h3>
+                            <p><strong>Status:</strong> ${response.status}</p>
+                            <p><strong>Datos devueltos:</strong></p>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                            
+                            ${Array.isArray(data) && data.length > 0 ? `
+                                <h4>🎯 DATOS DEL SEGUIMIENTO:</h4>
+                                <p><strong>Token:</strong> ${data[0].token || 'NULL'}</p>
+                                <p><strong>Latitud:</strong> ${data[0].latitud_actual || 'NULL'}</p>
+                                <p><strong>Longitud:</strong> ${data[0].longitud_actual || 'NULL'}</p>
+                                <p><strong>Activo:</strong> ${data[0].activo || 'NULL'}</p>
+                                <p><strong>Ubicación JSONB:</strong> ${JSON.stringify(data[0].ubicacion_actual) || 'NULL'}</p>
+                            ` : '<p>⚠️ Array vacío o formato inesperado</p>'}
+                        </div>
+                    `;
+                } else {
+                    resultsDiv.innerHTML = `
+                        <div class="result error">
+                            <h3>❌ RPC FALLÓ</h3>
+                            <p><strong>Status:</strong> ${response.status}</p>
+                            <p><strong>Error:</strong></p>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                }
+
+            } catch (error) {
+                console.error('💥 Network error:', error);
+                resultsDiv.innerHTML = `
+                    <div class="result error">
+                        <h3>💥 ERROR DE CONEXIÓN</h3>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p><strong>Stack:</strong></p>
+                        <pre>${error.stack}</pre>
+                    </div>
+                `;
+            }
+        }
+
+        // Auto-ejecutar al cargar
+        window.onload = () => {
+            setTimeout(testRPC, 1000);
+        };
+    </script>
+</body>
+</html>

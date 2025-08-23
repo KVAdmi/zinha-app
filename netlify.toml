@@ -1,0 +1,38 @@
+# Configuración de Netlify para Sistema de Tracking
+# Este archivo debe estar en la raíz del proyecto
+
+# Redirecciones para el sistema de tracking
+[[redirects]]
+  from = "/tracking/*"
+  to = "/tracking.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/track/*"
+  to = "/tracking.html"
+  status = 200
+  force = true
+
+# Headers de seguridad
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Headers específicos para la página de tracking
+[[headers]]
+  for = "/tracking.html"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
+
+# Configuración del sitio
+[build]
+  publish = "dist"
+
+# BUILD:20250822-1021

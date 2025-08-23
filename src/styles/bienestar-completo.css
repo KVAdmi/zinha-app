@@ -1,0 +1,227 @@
+/* Estilos específicos para el módulo de Bienestar Completo */
+
+/* Animaciones personalizadas */
+@keyframes pulse-gentle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Clases utilitarias para el módulo */
+.bienestar-card {
+  @apply relative overflow-hidden rounded-3xl backdrop-blur-xl border border-white/30 shadow-2xl hover:shadow-3xl transition-all duration-300;
+}
+
+.bienestar-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.7s;
+}
+
+.bienestar-card:hover::before {
+  left: 100%;
+}
+
+/* Estilos para contenido de artículos */
+.article-content {
+  @apply text-brand-primary leading-relaxed;
+}
+
+.article-content h3 {
+  @apply text-xl font-bold text-brand-primary font-serif mb-4 mt-8;
+}
+
+.article-content h4 {
+  @apply text-lg font-semibold text-brand-primary mb-3 mt-6;
+}
+
+.article-content p {
+  @apply mb-4 text-brand-secondary/90 leading-relaxed;
+}
+
+.article-content .lead {
+  @apply text-lg font-medium text-brand-primary mb-6 italic;
+}
+
+.article-content ul {
+  @apply space-y-2 mb-6;
+}
+
+.article-content li {
+  @apply flex items-start text-brand-secondary/90;
+}
+
+.article-content li::before {
+  content: '•';
+  @apply text-brand-accent mr-3 font-bold;
+}
+
+.article-content ol {
+  @apply space-y-2 mb-6 list-decimal list-inside;
+}
+
+.article-content ol li {
+  @apply text-brand-secondary/90;
+}
+
+.article-content ol li::before {
+  content: none;
+}
+
+.article-content blockquote {
+  @apply border-l-4 border-brand-accent pl-6 italic text-brand-secondary my-6 bg-gradient-to-r from-brand-accent/5 to-transparent py-4 rounded-r-lg;
+}
+
+.article-content strong {
+  @apply font-semibold text-brand-primary;
+}
+
+/* Estilos específicos para test interactivos */
+.test-option {
+  @apply w-full p-4 text-left rounded-xl border-2 transition-all duration-300 cursor-pointer;
+}
+
+.test-option:not(.selected) {
+  @apply border-white/30 bg-white/60 hover:bg-white/80 text-brand-secondary;
+}
+
+.test-option.selected {
+  @apply border-brand-accent bg-brand-accent/10 text-brand-primary;
+}
+
+.test-radio {
+  @apply w-4 h-4 rounded-full border-2 transition-all duration-300;
+}
+
+.test-radio:not(.selected) {
+  @apply border-gray-300;
+}
+
+.test-radio.selected {
+  @apply border-brand-accent bg-brand-accent;
+}
+
+.test-radio.selected::after {
+  content: '';
+  @apply w-2 h-2 bg-white rounded-full block m-0.5;
+}
+
+/* Estilos para audio player */
+.audio-controls {
+  @apply flex items-center space-x-2 bg-white/60 backdrop-blur-sm rounded-xl p-2 border border-white/30;
+}
+
+.audio-button {
+  @apply w-8 h-8 rounded-lg flex items-center justify-center transition-colors duration-300;
+}
+
+.audio-button.play {
+  @apply bg-brand-accent text-white hover:bg-brand-accent/90;
+}
+
+.audio-button.secondary {
+  @apply bg-gray-200 text-gray-600 hover:bg-gray-300;
+}
+
+/* Efectos hover para tarjetas de categorías */
+.category-card {
+  @apply group cursor-pointer relative overflow-hidden rounded-3xl backdrop-blur-xl border border-white/30 shadow-2xl hover:shadow-3xl transition-all duration-300;
+}
+
+.category-card:hover {
+  transform: scale(1.02) translateY(-5px);
+}
+
+.category-card .icon-container {
+  @apply w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300;
+}
+
+.category-card .chevron {
+  @apply w-5 h-5 text-brand-secondary/60 group-hover:text-brand-primary group-hover:translate-x-1 transition-all duration-300;
+}
+
+/* Estilos para secciones de contenido */
+.content-section {
+  @apply bg-white/60 backdrop-blur-lg rounded-2xl p-6 border border-white/30 shadow-lg;
+}
+
+.tips-section {
+  @apply bg-gradient-to-br from-green-50/80 to-emerald-50/80 backdrop-blur-lg rounded-2xl p-6 border border-green-200/30 shadow-lg;
+}
+
+.downloads-section {
+  @apply bg-gradient-to-br from-pink-50/80 to-rose-50/80 backdrop-blur-lg rounded-2xl p-6 border border-pink-200/30 shadow-lg;
+}
+
+.meditations-section {
+  @apply bg-gradient-to-br from-blue-50/80 to-indigo-50/80 backdrop-blur-lg rounded-2xl p-6 border border-blue-200/30 shadow-lg;
+}
+
+.tests-section {
+  @apply bg-gradient-to-br from-yellow-50/80 to-amber-50/80 backdrop-blur-lg rounded-2xl p-6 border border-yellow-200/30 shadow-lg;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .category-card {
+    @apply hover:scale-100 hover:translate-y-0;
+  }
+  
+  .category-card:active {
+    @apply scale-95;
+  }
+  
+  .article-content {
+    @apply text-sm;
+  }
+  
+  .article-content h3 {
+    @apply text-lg;
+  }
+  
+  .article-content h4 {
+    @apply text-base;
+  }
+}
+
+/* Dark mode support (si se implementa) */
+@media (prefers-color-scheme: dark) {
+  .bienestar-card {
+    @apply bg-gray-800/20 border-gray-700/30;
+  }
+  
+  .content-section {
+    @apply bg-gray-800/60 border-gray-700/30;
+  }
+}

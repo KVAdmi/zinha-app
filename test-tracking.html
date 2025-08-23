@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Tracking</title>
+</head>
+<body>
+    <h1>Test de Tracking</h1>
+    <p>Si puedes ver esta página, el servidor local funciona.</p>
+    <p><a href="/tracking.html">Ir a tracking.html</a></p>
+    
+    <script>
+        // Test básico para verificar que no hay errores de sintaxis
+        try {
+            console.log('✅ Archivo de test cargado correctamente');
+            
+            // Intentar acceder a tracking.html via fetch para verificar
+            fetch('/tracking.html')
+                .then(response => response.text())
+                .then(html => {
+                    const matches = html.match(/class PreciseLocationServiceTracking/g);
+                    console.log(`🔍 Declaraciones encontradas en tracking.html: ${matches ? matches.length : 0}`);
+                    
+                    if (matches && matches.length === 1) {
+                        document.body.innerHTML += '<p style="color: green;">✅ tracking.html tiene UNA declaración - CORRECTO</p>';
+                    } else if (matches && matches.length > 1) {
+                        document.body.innerHTML += `<p style="color: red;">❌ tracking.html tiene ${matches.length} declaraciones - DUPLICADAS</p>`;
+                    } else {
+                        document.body.innerHTML += '<p style="color: orange;">⚠️ No se encontró la clase en tracking.html</p>';
+                    }
+                })
+                .catch(err => {
+                    console.error('Error cargando tracking.html:', err);
+                    document.body.innerHTML += '<p style="color: red;">❌ Error cargando tracking.html</p>';
+                });
+        } catch (error) {
+            console.error('Error en test:', error);
+        }
+    </script>
+</body>
+</html>
