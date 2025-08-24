@@ -7,7 +7,7 @@ declare global {
   }
 }
 
-const JITSI_DOMAIN = "meet.appzinha.com";
+const JITSI_DOMAIN = "meet.zinha.app";
 const ROOM_NAME = "zinha-sala-general"; // usa la misma sala que ya definieron
 
 export default function Conferencia() {
@@ -22,7 +22,7 @@ export default function Conferencia() {
     if (!script) {
       script = document.createElement("script");
       script.id = "jitsi-ext";
-      script.src = "https://meet.appzinha.com/external_api.js";
+      script.src = "https://meet.zinha.app/external_api.js";
       script.async = true;
       script.onload = () => setReady(true);
       document.body.appendChild(script);
@@ -89,8 +89,8 @@ export default function Conferencia() {
         // ⚠️ IMPORTANTE: Invitados NO pueden terminar para todos
         disableEndMeeting: true,
         // Fuerza WebSocket/BOSH contra tu dominio (belt & suspenders)
-        websocket: "wss://meet.appzinha.com/xmpp-websocket",
-        bosh: "https://meet.appzinha.com/http-bind",
+        websocket: "wss://meet.zinha.app/xmpp-websocket",
+        bosh: "https://meet.zinha.app/http-bind",
         // Desactiva P2P (reduce edge-casos en WebView/TWA)
         p2p: { enabled: false },
         // Opcional: sube la compatibilidad en móviles WebView

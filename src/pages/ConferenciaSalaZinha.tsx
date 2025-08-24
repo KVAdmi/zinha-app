@@ -38,12 +38,12 @@ export default function ConferenciaSalaZinha() {
         }
 
         // Carga external_api.js una sola vez
-        await loadJitsiApiOnce('meet.appzinha.com');
+        await loadJitsiApiOnce('meet.zinha.app');
         
         if (disposed) return;
 
         // @ts-ignore
-        const api = new window.JitsiMeetExternalAPI("meet.appzinha.com", {
+        const api = new window.JitsiMeetExternalAPI("meet.zinha.app", {
           roomName: room,
           parentNode: nodeRef.current!,
           jwt,

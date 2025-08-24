@@ -11,7 +11,7 @@ export function generateJitsiJWT(userId: string, userName: string, roomName: str
     iss: JITSI_APP_ID,
     aud: JITSI_APP_ID,
     exp: Math.floor(Date.now() / 1000) + (60 * 60), // 1 hora
-    sub: 'meet.appzinha.com',
+    sub: 'meet.zinha.app',
     room: roomName,
     context: {
       user: {

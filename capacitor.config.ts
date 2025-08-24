@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'Zinha',
   webDir: 'dist',
   server: {
-    allowNavigation: ['appzinha.com', 'meet.appzinha.com']
+    allowNavigation: ['zinha.app', 'meet.zinha.app', 'tracking.zinha.app']
   }
 };
 

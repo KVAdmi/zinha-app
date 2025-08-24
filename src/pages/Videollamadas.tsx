@@ -26,7 +26,7 @@ export default function Videollamadas() {
 
       if (apiRef.current || !window.JitsiMeetExternalAPI) return;
 
-      apiRef.current = new window.JitsiMeetExternalAPI("meet.appzinha.com", {
+      apiRef.current = new window.JitsiMeetExternalAPI("meet.zinha.app", {
         roomName: "zinha-sala-general",
         parentNode: containerRef.current!,
         width: "100%",
@@ -71,7 +71,7 @@ export default function Videollamadas() {
     if (!s) {
       s = document.createElement("script");
       s.id = "jitsi-external-api";
-      s.src = "https://meet.appzinha.com/external_api.js";
+      s.src = "https://meet.zinha.app/external_api.js";
       s.async = true;
       s.onload = startJitsi;
       document.body.appendChild(s);

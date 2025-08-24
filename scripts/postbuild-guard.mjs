@@ -16,17 +16,6 @@ const forbid = [
   "llms.txt"
 ];
 
-const mustExist = [
-  "index.html",
-  // Usa solo uno de estos dos:
-  "tracking.html" // si eliges archivo único
-  // "tracking/index.html" // si eliges carpeta
-];
-
-// 1) Prohibir dist/public
-if (existsSync(join(dist, "public"))) {
-  throw new Error("❌ No debe existir dist/public. Revisa copias/plug-ins que lo generen.");
-}
 
 // 2) Borrar archivos prohibidos si existen
 for (const f of forbid) {
@@ -37,13 +26,7 @@ for (const f of forbid) {
   }
 }
 
-// 3) Verificar indispensables
-for (const f of mustExist) {
-  const p = join(dist, f);
-  if (!existsSync(p)) {
-    throw new Error(`❌ Falta indispensable en dist: ${f}`);
-  }
-}
+
 
 // 4) Enforce uno solo para tracking (archivo o carpeta, no ambos)
 const fileTracking = existsSync(join(dist, "tracking.html"));

@@ -40,7 +40,7 @@ export default async function handler(req, res) {
     const payload = {
       aud: 'jitsi',
       iss: process.env.JITSI_APP_ID,
-      sub: 'meet.appzinha.com',
+      sub: 'meet.zinha.app',
       room,
       exp: Math.floor(Date.now() / 1000) + 60 * 60, // 1h
       context: { 

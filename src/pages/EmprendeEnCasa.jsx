@@ -327,7 +327,7 @@ Información adicional:
 Saludos,
 [Tu nombre]`;
 
-    const mailtoLink = `mailto:soporte@appzinha.com?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+    const mailtoLink = `mailto:soporte@zinha.app?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
     window.location.href = mailtoLink;
   };
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Script para quitar logo de Jitsi y configurar JWT
-# Ejecutar en el servidor meet.appzinha.com
+# Ejecutar en el servidor meet.zinha.app
 
 echo "🔧 Configurando servidor Jitsi..."
 
@@ -31,14 +31,14 @@ EOF
 
 # 2. CONFIGURAR JWT AUTHENTICATION
 echo "🔐 Configurando JWT en Prosody..."
-sudo cp /etc/prosody/conf.avail/meet.appzinha.com.cfg.lua /etc/prosody/conf.avail/meet.appzinha.com.cfg.lua.backup
+sudo cp /etc/prosody/conf.avail/meet.zinha.app.cfg.lua /etc/prosody/conf.avail/meet.zinha.app.cfg.lua.backup
 
 # Buscar y reemplazar la línea de authentication
-sudo sed -i 's/authentication = "anonymous"/authentication = "token"/' /etc/prosody/conf.avail/meet.appzinha.com.cfg.lua
+sudo sed -i 's/authentication = "anonymous"/authentication = "token"/' /etc/prosody/conf.avail/meet.zinha.app.cfg.lua
 
 # Agregar configuración de JWT si no existe
-if ! grep -q "app_id" /etc/prosody/conf.avail/meet.appzinha.com.cfg.lua; then
-    sudo sed -i '/authentication = "token"/a\    app_id = "appzinha"\n    app_secret = "your-secret-key"\n    allow_empty_token = false' /etc/prosody/conf.avail/meet.appzinha.com.cfg.lua
+if ! grep -q "app_id" /etc/prosody/conf.avail/meet.zinha.app.cfg.lua; then
+    sudo sed -i '/authentication = "token"/a\    app_id = "zinha"\n    app_secret = "your-secret-key"\n    allow_empty_token = false' /etc/prosody/conf.avail/meet.zinha.app.cfg.lua
 fi
 
 # 3. REINICIAR SERVICIOS

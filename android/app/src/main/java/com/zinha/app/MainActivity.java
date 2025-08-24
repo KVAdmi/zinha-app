@@ -15,7 +15,7 @@ public class MainActivity extends BridgeActivity {
       public void onPermissionRequest(final PermissionRequest request) {
         runOnUiThread(() -> {
           String origin = request.getOrigin().toString();
-          if (origin.endsWith("meet.appzinha.com/") || origin.contains("meet.appzinha.com")) {
+          if (origin.endsWith("meet.zinha.app/") || origin.contains("meet.zinha.app")) {
             request.grant(request.getResources()); // cámara/mic para Jitsi
           } else {
             request.deny();

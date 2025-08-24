@@ -8,7 +8,7 @@ declare global {
   }
 }
 
-const JITSI_DOMAIN = "meet.appzinha.com";
+const JITSI_DOMAIN = "meet.zinha.app";
 const ROOM_NAME = "zinha-sala-general";
 
 export default function ConferenciaClean() {
@@ -75,8 +75,8 @@ export default function ConferenciaClean() {
         hideConferenceSubject: true,
         hideConferenceTimer: true,
         disableEndMeeting: true, // Invitadas NO pueden terminar para todos
-        websocket: "wss://meet.appzinha.com/xmpp-websocket",
-        bosh: "https://meet.appzinha.com/http-bind",
+        websocket: "wss://meet.zinha.app/xmpp-websocket",
+        bosh: "https://meet.zinha.app/http-bind",
         p2p: { enabled: false },
         disable1On1Mode: false,
       },

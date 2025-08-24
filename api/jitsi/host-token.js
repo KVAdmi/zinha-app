@@ -27,7 +27,7 @@ export default async function handler(req, res) {
     const payload = {
       aud: 'jitsi',
       iss: appId,
-      sub: 'meet.appzinha.com',
+      sub: 'meet.zinha.app',
       room: room,
       exp: Math.floor(Date.now() / 1000) + 60 * 60, // 1 hora
       context: {

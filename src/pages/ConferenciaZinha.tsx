@@ -16,7 +16,7 @@ declare global {
 }
 
 const ROOM_NAME = "zinha-sala-general";
-const JITSI_DOMAIN = "meet.appzinha.com";
+const JITSI_DOMAIN = "meet.zinha.app";
 
 export default function ConferenciaZinha() {
   const [showWelcome, setShowWelcome] = useState(true);

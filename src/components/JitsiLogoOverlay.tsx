@@ -1,4 +1,8 @@
-const JitsiLogoOverlay = () => {
+interface JitsiLogoOverlayProps {
+  visible?: boolean;
+}
+
+const JitsiLogoOverlay = ({ visible = true }: JitsiLogoOverlayProps) => {
   return (
     <div
       aria-hidden="true"
@@ -7,6 +11,7 @@ const JitsiLogoOverlay = () => {
         top: 8,
         left: 8,
         zIndex: 9999,
+        display: visible ? 'block' : 'none',
         pointerEvents: 'auto',  // <- CLAVE: captura el click para que NO pase al iframe
         width: 150, 
         height: 60, // área que cubre donde sale el watermark de Jitsi

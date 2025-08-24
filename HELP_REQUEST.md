@@ -34,7 +34,7 @@ Lat: 20.7028240, Lng: -103.3043980
 4. ¿Qué error devuelve la API exactamente?
 
 ## 📞 TESTING URLs
-- Prod: https://appzinha.com/tracking/track_d402362837f541d2b90af1076eb6c43b  
+- Prod: https://tracking.zinha.app/track_d402362837f541d2b90af1076eb6c43b  
 - Local: http://localhost:5173/tracking.html#track_d402362837f541d2b90af1076eb6c43b
 
 ## ⚡ CRITICIDAD: MÁXIMA

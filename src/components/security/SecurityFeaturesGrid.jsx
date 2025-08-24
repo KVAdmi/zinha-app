@@ -1,7 +1,7 @@
 // ...imports
 // Utilidad para abrir WhatsApp con token y ubicación
 function abrirWhatsConToken(token, lat, lng) {
-  const track = `https://appzinha.com/tracking/track_${encodeURIComponent(token)}`;
+  const track = `https://tracking.zinha.app/track_${encodeURIComponent(token)}`;
   const texto = encodeURIComponent(
     `🚨 Acompáñame\nToken: ${token}\n${lat && lng ? `Inicio: ${lat},${lng}\n` : ''}Mapa: ${track}`
   );

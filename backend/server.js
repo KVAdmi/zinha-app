@@ -88,7 +88,7 @@ app.post('/api/conference/validate-pin', async (req, res) => {
     const payload = {
       iss: JITSI_APP_ID,
       aud: JITSI_APP_ID,
-      sub: 'meet.appzinha.com',
+      sub: 'meet.zinha.app',
       room: room,
       iat: now,
       exp: now + (24 * 60 * 60), // 24 horas
